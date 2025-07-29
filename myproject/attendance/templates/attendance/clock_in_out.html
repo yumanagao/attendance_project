@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>QRコード出退勤</title>
+  <script src="{% static 'js/html5-qrcode.min.js' %}" defer></script>
+  <script src="{% static 'js/clock.js' %}" defer></script>
+
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f5f7fa;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      margin-top: 40px;
+      font-size: 1.8rem;
+      color: #333;
+    }
+
+    #reader {
+        width: 300px;
+        height: 300px;
+        margin: 0 auto;
+        display: block;
+        padding: 0;
+    }
+    #reader-container {
+        padding: 0;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;  /* or remove fixed height */
+    }
+
+    #status {
+      margin-top: 20px;
+      color: #00796b;
+      font-weight: bold;
+    }
+
+    /* ✂️ 不要なフレーム・オーバーレイを削除 */
+    .qr-code-region,
+    .qr-code-region-highlight,
+    .qr-code-scanner-frame,
+    .qr-code-full-region,
+    svg {
+      display: none !important;
+    }
+    .home-button {
+        margin-top: 30px;
+        text-align: center;
+    }
+
+    .home-button a {
+        display: inline-block;
+        background-color: #007bff;
+        color: white;
+        padding: 10px 24px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+    }
+
+    .home-button a:hover {
+  background-color: #0056b3;
+}
+  </style>
+</head>
+<body>
+  <h1>QRコードで出退勤</h1>
+
+  <div id="reader-container">
+    <div id="reader"></div>
+  </div>
+
+  <p id="status">QRコードをスキャンしてください</p>
+  <p id="result-message"></p>
+  <div class="home-button">
+    <a href="{% url 'home' %}">🏠 ホームに戻る</a>
+  </div>
+</body>
+</html>
