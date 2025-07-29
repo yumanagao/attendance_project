@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: attendance-project
+    env: docker
+    plan: free
+    branch: main
+    repo: https://github.com/ユーザー名/attendance_project
+    dockerfilePath: Dockerfile
+    envVars:
+      - key: DATABASE_URL
+        value: データベースのURL（例: SQLiteは使えません。PostgreSQLなどをRenderで作成）
+      - key: SECRET_KEY
+        value: your-secret-key
+      - key: DEBUG
+        value: "False"
