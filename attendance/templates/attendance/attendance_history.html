@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>出退勤履歴</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 60px auto;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .link-area {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .link-area a {
+            text-decoration: none;
+            color: #007bff;
+            font-size: 15px;
+        }
+
+        .link-area a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>出退勤履歴</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>従業員名</th>
+                    <th>日付</th>
+                    <th>出勤時刻</th>
+                    <th>退勤時刻</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in records %}
+                <tr>
+                    <td>{{ record.employee.name }}</td>
+                    <td>{{ record.date }}</td>
+                    <td>{{ record.clock_in|default:"-" }}</td>
+                    <td>{{ record.clock_out|default:"-" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="link-area">
+            <a href="{% url 'admin_home' %}">管理者トップへ戻る</a>
+        </div>
+    </div>
+</body>
+</html>
