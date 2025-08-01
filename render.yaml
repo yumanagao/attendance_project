@@ -1,15 +1,12 @@
 services:
   - type: web
-    name: attendance-project
+    name: django-docker-app
     env: docker
     plan: free
-    branch: main
-    repo: https://github.com/ユーザー名/attendance_project
-    dockerfilePath: Dockerfile
+    region: singapore  # 東京はないので近場を選択
+    dockerfilePath: ./Dockerfile
     envVars:
-      - key: DATABASE_URL
-        value: データベースのURL（例: SQLiteは使えません。PostgreSQLなどをRenderで作成）
-      - key: SECRET_KEY
-        value: your-secret-key
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
       - key: DEBUG
         value: "False"
