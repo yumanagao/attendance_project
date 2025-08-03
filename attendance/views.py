@@ -31,7 +31,6 @@ def is_admin(user):
     return user.is_authenticated and user.is_staff
 
 # 🔧 QRコード画像生成関数
-@user_passes_test(is_admin, login_url='admin_login')
 def generate_qr_image(data):
     qr = qrcode.QRCode(version=1, box_size=10, border=5)
     qr.add_data(data)
@@ -58,26 +57,15 @@ def clock_in_out(request):
 
             if created or not attendance.clock_in:
                 attendance.clock_in = timezone.now()
-                message_type = "clock_in"
-                greeting = f"{employee.name} さん、おはようございます。出勤打刻が完了しました。"
+                message = "出勤打刻が完了しました"
             else:
                 attendance.clock_out = timezone.now()
-                message_type = "clock_out"
-                greeting = f"{employee.name} さん、お疲れ様でした。退勤打刻が完了しました。"
+                message = "退勤打刻が完了しました"
 
             attendance.save()
-            return JsonResponse({
-                'status': 'success',
-                'message': greeting,
-                'message_type': message_type
-            })
-
+            return JsonResponse({'status': 'success', 'message': message})
         except Exception as e:
-            return JsonResponse({
-                'status': 'error',
-                'message': f'エラーが発生しました: {str(e)}'
-            })
-
+            return JsonResponse({'status': 'error', 'message': f'エラーが発生しました: {str(e)}'})
     return JsonResponse({'status': 'error', 'message': '無効なリクエスト'})
 
 # 📋 打刻ページ（テンプレートでカメラ起動）

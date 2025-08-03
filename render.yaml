@@ -1,12 +1,29 @@
 services:
   - type: web
-    name: django-docker-app
-    env: docker
-    plan: free
-    region: singapore  # 東京はないので近場を選択
-    dockerfilePath: ./Dockerfile
+    name: myproject
+    env: python
+    buildCommand: ""
+    startCommand: gunicorn myproject.wsgi:application --bind 0.0.0.0:8000
     envVars:
       - key: DJANGO_SECRET_KEY
-        generateValue: true
+        value: s3cr3t_k3y_f0r_d3v3l0pm3nt
       - key: DEBUG
         value: "False"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: attendance-db
+          property: connectionString
+      - key: QR_SECRET_KEY
+        value: 6NoWzY1tu6RtzA7GoxYULR4kqD_Nh4hN7yGfhdYjsfI=
+    autoDeploy: true
+    buildFilter:
+      paths:
+        - '**/*.py'
+        - '**/*.html'
+        - '**/static/**'
+    plan: free
+    region: oregon
+    healthCheckPath: /
+    preDeployCommand: |
+      python manage.py migrate
+      python manage.py collectstatic --noinput
