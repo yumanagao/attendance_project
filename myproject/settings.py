@@ -109,4 +109,6 @@ QR_SECRET_KEY = os.getenv('QR_SECRET_KEY', '').encode()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # CSRFの信頼オリジン（Renderなど）
-CSRF_TRUSTED_ORIGINS = [f"https://{host}" for host in ALLOWED_HOSTS if host not in ('localhost', '127.0.0.1')]
+CSRF_TRUSTED_ORIGINS = [
+    'https://attendance-app-yr4t.onrender.com',
+]
